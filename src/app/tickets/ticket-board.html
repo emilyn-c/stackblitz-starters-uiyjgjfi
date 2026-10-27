@@ -1,0 +1,34 @@
+<section class="board">
+  <header class="board-header">
+    <h1>Support tickets</h1>
+    <p class="summary">
+      {{ ticketCount() }} tickets &middot; {{ countByStatus('open') }} open &middot;
+      {{ countByStatus('in-progress') }} in progress &middot; {{ countByStatus('resolved') }} resolved
+    </p>
+  </header>
+
+  <table class="tickets">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Status</th>
+        <th>Priority</th>
+        <th>Assignee</th>
+        <th>Updated</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (ticket of getSortedTickets(); track $index) {
+        <tr>
+          <td class="id">{{ ticket.id }}</td>
+          <td>{{ ticket.title }}</td>
+          <td><span [class]="'badge status-' + ticket.status">{{ ticket.status }}</span></td>
+          <td><span [class]="'priority priority-' + ticket.priority">{{ ticket.priority }}</span></td>
+          <td>{{ assigneeLabel(ticket) }}</td>
+          <td class="muted">{{ timeAgo(ticket.updatedAt) }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</section>
